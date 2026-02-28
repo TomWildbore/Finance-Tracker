@@ -1,17 +1,15 @@
-# Finance Tracker API
+## Project Structure
 
-## Tech Stack
-- Java 17
-- Spring Boot
-- Spring Data JPA
-- H2 Database
+- backend → Spring Boot REST API
+- frontend → React (Vite) frontend
 
-## Features
-- Create users
-- Retrieve users
-- REST API structure
+## How to Run
 
-## Planned Features
-- Transactions
-- Streak tracking
-- Gamification system
+### Backend
+cd backend
+mvn spring-boot:run
+
+### Frontend
+cd frontend
+npm install
+npm run dev

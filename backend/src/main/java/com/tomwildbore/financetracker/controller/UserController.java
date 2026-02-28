@@ -27,6 +27,12 @@ public class UserController {
         return userRepository.save(user);
     }
 
+    @GetMapping("/{userId}")
+    public User getUser(@PathVariable Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
     @GetMapping("/{userId}/transactions")
     public List<Transaction> getUserTransactions(@PathVariable Long userId) {
 
