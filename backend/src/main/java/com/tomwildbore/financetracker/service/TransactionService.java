@@ -1,31 +1,27 @@
-package com.tomwildbore.financetracker.controller;
+package com.tomwildbore.financetracker.service;
 
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import com.tomwildbore.financetracker.model.Transaction;
 import com.tomwildbore.financetracker.model.User;
 import com.tomwildbore.financetracker.repository.TransactionRepository;
 import com.tomwildbore.financetracker.repository.UserRepository;
 
-@RestController
-@RequestMapping("/transactions")
-public class TransactionController {
+@Service
+public class TransactionService {
 
     private final TransactionRepository transactionRepository;
     private final UserRepository userRepository;
 
-    public TransactionController(TransactionRepository transactionRepository,
-                                 UserRepository userRepository) {
+    public TransactionService(TransactionRepository transactionRepository,
+                              UserRepository userRepository) {
         this.transactionRepository = transactionRepository;
         this.userRepository = userRepository;
     }
 
-    @PostMapping("/{userId}")
-    public Transaction createTransaction(@PathVariable Long userId,
-                                        @RequestBody Transaction transaction) {
+    public Transaction createTransaction(Long userId, Transaction transaction) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -41,7 +37,6 @@ public class TransactionController {
             user.setCurrentStreak(1);
         }
 
-        // Update longest streak if needed
         if (user.getCurrentStreak() > user.getLongestStreak()) {
             user.setLongestStreak(user.getCurrentStreak());
         }
@@ -53,10 +48,5 @@ public class TransactionController {
         userRepository.save(user);
 
         return transactionRepository.save(transaction);
-    }
-
-    @GetMapping("/user/{userId}")
-    public List<Transaction> getTransactionsByUser(@PathVariable Long userId) {
-        return transactionRepository.findByUserId(userId);
     }
 }

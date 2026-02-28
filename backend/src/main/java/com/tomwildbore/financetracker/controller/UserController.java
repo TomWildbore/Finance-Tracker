@@ -8,6 +8,7 @@ import com.tomwildbore.financetracker.model.Transaction;
 import com.tomwildbore.financetracker.repository.UserRepository;
 import com.tomwildbore.financetracker.repository.TransactionRepository;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/users")
 public class UserController {
