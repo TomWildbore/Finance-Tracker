@@ -39,6 +39,6 @@ public class UserController {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        return transactionRepository.findByUserId(user.getId());
+        return transactionRepository.findByUser_IdOrderByDateDesc(user.getId());
     }
 }
